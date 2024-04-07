@@ -107,7 +107,7 @@ def main():
     with st.sidebar:
         st.markdown('# Instructions:')
         st.markdown('## 1. Initialize the session')
-        st.markdwon('Initializing the session / chat may take 1-2 mins. Please be patient.')
+        st.markdown('Initializing the session / chat may take 1-2 mins. Please be patient.')
         st.button('Initialize Chat!', on_click=initialize_endpoint, 
                   key='initialize_button', disabled= st.session_state['inference_endpoint_initialized'])
       
