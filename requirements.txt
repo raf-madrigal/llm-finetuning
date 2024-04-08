@@ -1,5 +1,5 @@
 huggingface-hub==0.22.2
 langchain==0.1.13
 python-dotenv 
-streamlit==1.31.1
-pyht
+streamlit==1.33
+pyht==0.0.27

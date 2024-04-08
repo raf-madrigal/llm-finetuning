@@ -6,13 +6,13 @@ import wave
 import os
 load_dotenv()
 
-client = Client(
-    user_id=os.environ['PYHT_USER_ID'], 
-    api_key=os.environ['PYHT_SECRET']
-)
+# client = Client(
+#     user_id=os.environ['PYHT_USER_ID'], 
+#     api_key=os.environ['PYHT_SECRET']
+# )
 
-# text_to_convert = "Can you tell me your account email or, ah your phone number?"
-options = TTSOptions(voice=os.environ['PYHT_SNOOP_CLONED_VOICE'])
+# # text_to_convert = "Can you tell me your account email or, ah your phone number?"
+# options = TTSOptions(voice=os.environ['PYHT_SNOOP_CLONED_VOICE'])
 
 def text_to_speech(text_to_convert):
 

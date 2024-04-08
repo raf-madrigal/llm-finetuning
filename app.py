@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import requests as r 
 from chat.chatbot import HuggingInferenceEndpointLLM
 from chat.prompts import SNOOP_PROMPT
-from chat.tts import text_to_speech, Client, options
+from chat.tts import text_to_speech
 
 def load_llm_and_chain():
     if 'llm' not in st.session_state.keys():
