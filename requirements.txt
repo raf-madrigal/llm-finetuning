@@ -2,3 +2,4 @@ huggingface-hub==0.22.2
 langchain==0.1.13
 python-dotenv 
 streamlit==1.31.1
+pyht
