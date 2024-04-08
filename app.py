@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import requests as r 
 from chat.chatbot import HuggingInferenceEndpointLLM
 from chat.prompts import SNOOP_PROMPT
+from chat.tts import text_to_speech, Client, options
 
 def load_llm_and_chain():
     if 'llm' not in st.session_state.keys():
@@ -55,25 +56,26 @@ def initialize_endpoint():
     elapsed_time = 0
     while (get_status() != 200) and (elapsed_time < 300):
         if st.session_state.verbose:
-            st.session_state.messages.append({"role": "assistant", 
-                                              "content": 'Initializing Inference Endpoint... Please wait for 1-2 mins.'})
+            # st.session_state.messages.append({"role": "assistant", 
+            #                                   "content": 'Initializing Inference Endpoint... Please wait for 1-2 mins.'})
             
             print('Initializing Inference Endpoint... Please wait for 1-2 mins.')
         if not sent_initial_message:
             initial_message()
             sent_initial_message = True
             if st.session_state.verbose:
-                st.session_state.messages.append({"role": "assistant", 
-                                              "content": 'Initial message sent!'})
+                # st.session_state.messages.append({"role": "assistant", 
+                #                                  "content": 'Initial message sent!'})
                 print('Initial message sent!')
                 
         time.sleep(90)
         elapsed_time = time.time()-start
     if st.session_state.verbose:
+        # st.session_state.messages.append({"role": "assistant", 
+        #                                       "content": f'Initialization Complete! Time to Initilize {elapsed_time} secs.'})
+        # st.session_state.messages.appe
         st.session_state.messages.append({"role": "assistant", 
-                                              "content": f'Initialization Complete! Time to Initilize {elapsed_time} secs.'})
-        st.session_state.messages.append({"role": "assistant", 
-                                              "content": f'Please send your first message to Snoop Dogg!'})
+                                              "content": f'Initialization Done! Please send your first message to Snoop Dogg.'})
         
         print('Initialization Completed!')
         print('Time Elapsed to Initialize Endpoint', elapsed_time)
@@ -107,7 +109,7 @@ def main():
     with st.sidebar:
         st.markdown('# Instructions:')
         st.markdown('## 1. Initialize the session')
-        st.markdown('Initializing the session / chat may take 1-2 mins. Please be patient.')
+        st.markdown('Initializing the session / chat may take 1-5 mins. Please be patient. (The time to initialize the endpoint service is dependent on the queue at HuggingFace end. It cannot be controlled.)')
         st.button('Initialize Chat!', on_click=initialize_endpoint, 
                   key='initialize_button', disabled= st.session_state['inference_endpoint_initialized'])
       
@@ -128,8 +130,12 @@ def main():
             response = st.session_state['chain'].invoke(dict(message=question))
 
             st.markdown(response)
+            apth = text_to_speech(response)
+            st.audio(apth)
 
             st.session_state['messages'].append({'role':'assistant', 'content': response})
+
+            
     
 
 if __name__ == '__main__':
